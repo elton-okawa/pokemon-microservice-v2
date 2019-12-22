@@ -1,10 +1,21 @@
 {
   "1": {
     "id": "1",
-    "name": "Ash Ketchum"
+    "name": "Ash Ketchum",
+    "pokemons": [{
+      "id": "1",
+      "name": "Bulbasaur"
+    }, {
+      "id": "4",
+      "name": "Charmander"
+    }]
   },
   "2": {
     "id": "2",
-    "name": "Gary Oak"
+    "name": "Gary Oak",
+    "pokemons": [{
+      "id": "7",
+      "name": "Squirtle"
+    }]
   }
 }

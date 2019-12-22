@@ -6,7 +6,6 @@ import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
 
 const PROTO_PATH = path.join(process.cwd(), 'proto', 'grpc', 'trainer', 'trainer.proto');
 
-
 const db = new JsonDB(new Config("data", true, false, '/'));
 
 function getTrainer(call, callback) {
