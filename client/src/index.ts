@@ -1,10 +1,8 @@
 import 'reflect-metadata';
 import readline from 'readline';
 import Container from 'typedi';
-import { PubSub } from '@google-cloud/pubsub';
 
-import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand } from './command';
-import { PokemonCommand } from './command/pokemon.command';
+import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, PokemonCommand, LoginCommand, ChallengeListCommand } from './command';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -22,13 +20,15 @@ function printDivisor() {
   console.info('\n################################\n');
 }
 
-Container.set(Constants[Constants.TOKEN], '');
+Container.set(Constants[Constants.CURRENT_USER_ID], 0);
 
 const commands: Command[] = [
+  Container.get(LoginCommand),
   Container.get(LogoutCommand),
   Container.get(PokemonCommand),
   Container.get(TrainerCommand),
   Container.get(ChallengeCommand),
+  Container.get(ChallengeListCommand),
   new ExitCommand(),
 ];
 

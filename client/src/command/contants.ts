@@ -1,3 +1,3 @@
 export enum Constants {
-  TOKEN,
+  CURRENT_USER_ID,
 }

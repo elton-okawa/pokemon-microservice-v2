@@ -3,38 +3,23 @@ import grpc from 'grpc';
 import path from 'path';
 
 import { ProtoService } from "src/proto";
+import { TrainerBusDatasource } from "src/datasource";
 import { Command } from "./command";
 
 const TRAINER_COMMAND = 'trainer';
-const PROTO_PATH = path.join(process.cwd(), '../trainer/proto/grpc/trainer/trainer.proto');
 
 @Service()
 export class TrainerCommand extends Command {
   
-  private trainer;
-
   constructor(
-    private readonly protoService: ProtoService,
+    private readonly trainerBusDatasource: TrainerBusDatasource,
   ) {
-    super(TRAINER_COMMAND);
-
-    const protoDescriptor = this.protoService.getProtoDescriptor(PROTO_PATH);
-    this.trainer = protoDescriptor.trainer as any;
+    super(TRAINER_COMMAND, 1);
   }
 
   async do(args: any[]) {
     try {
-      const stub = new this.trainer.Trainer('localhost:50051', grpc.credentials.createInsecure());
-      const promiseRes = new Promise((resolve, reject) => {
-        stub.getTrainer({ id: args[1] }, (err, trainer) => {
-          if (err) {
-            reject(err);
-          } else {
-            resolve(trainer);
-          }
-        });
-      });
-      return await promiseRes;
+      return await this.trainerBusDatasource.getTrainer(args[1]);
     } catch (error) {
       if (error.response) {
         return `[Status: ${error.response.status}] ${error.response.data}`;
@@ -45,6 +30,6 @@ export class TrainerCommand extends Command {
   }
 
   getUsage(): string {
-    return `${TRAINER_COMMAND}`;
+    return `${TRAINER_COMMAND} <id>`;
   }
 }

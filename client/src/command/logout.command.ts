@@ -12,11 +12,11 @@ export class LogoutCommand extends Command {
   }
 
   do(args: any[]) {
-    if (!Container.get(Constants[Constants.TOKEN])) {
+    if (!Container.get(Constants[Constants.CURRENT_USER_ID])) {
       return 'Not logged in'
     }
 
-    Container.set(Constants[Constants.TOKEN], '');
+    Container.set(Constants[Constants.CURRENT_USER_ID], 0);
     return 'Successful logged out';
   }  
   

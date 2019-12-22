@@ -2,18 +2,30 @@ syntax = "proto3";
 
 package challenge;
 
-service Challenge {
-  rpc getTrainer (TrainerRequest) returns (TrainerResponse) {}
+service ChallengeService {
+  rpc getUserChallenges (ChallengeListRequest) returns (ChallengeListResponse) {}
+  rpc getOpponentChallenges (ChallengeListRequest) returns (ChallengeListResponse) {}
 }
 
-message TrainerRequest {
+message ChallengeListRequest {
   int32 id = 1;
 }
 
-message TrainerResponse {
+message ChallengeListResponse {
+  repeated Challenge challenges = 1;
+}
+
+message Challenge {
+  string id = 1;
+  User user = 2;
+  User opponent = 3;
+  string status = 4;
+}
+
+message User {
   int32 id = 1;
   string name = 2;
-  // repeated Pokemon pokemons = 3;
+  repeated Pokemon pokemons = 3;
 }
 
 message Pokemon {

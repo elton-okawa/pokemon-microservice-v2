@@ -4,3 +4,6 @@ export * from './logout.command';
 export * from './exit.command';
 export * from './trainer.command';
 export * from './challenge.command';
+export * from './pokemon.command';
+export * from './login.command';
+export * from './challenge-list.command';
