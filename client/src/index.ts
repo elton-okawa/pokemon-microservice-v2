@@ -1,8 +1,9 @@
 import 'reflect-metadata';
 import readline from 'readline';
 import Container from 'typedi';
+import { PubSub } from '@google-cloud/pubsub';
 
-import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants } from './command';
+import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand } from './command';
 import { PokemonCommand } from './command/pokemon.command';
 
 const rl = readline.createInterface({
@@ -27,6 +28,7 @@ const commands: Command[] = [
   Container.get(LogoutCommand),
   Container.get(PokemonCommand),
   Container.get(TrainerCommand),
+  Container.get(ChallengeCommand),
   new ExitCommand(),
 ];
 
