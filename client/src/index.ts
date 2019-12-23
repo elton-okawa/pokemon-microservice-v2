@@ -3,6 +3,7 @@ import readline from 'readline';
 import Container from 'typedi';
 
 import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, PokemonCommand, LoginCommand, ChallengeListCommand } from './command';
+import { ChallengeResolveCommand } from './command/challenge-resolver.command';
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -29,6 +30,7 @@ const commands: Command[] = [
   Container.get(TrainerCommand),
   Container.get(ChallengeCommand),
   Container.get(ChallengeListCommand),
+  Container.get(ChallengeResolveCommand),
   new ExitCommand(),
 ];
 

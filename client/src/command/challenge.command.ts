@@ -14,7 +14,7 @@ export class ChallengeCommand extends Command {
     private readonly trainerBusDatasource: TrainerBusDatasource,
     private readonly pubsubService: PubSubService,
   ) {
-    super(CHALLENGE_COMMAND);
+    super(CHALLENGE_COMMAND, 1);
   }
 
   async do(args: any[]) {
