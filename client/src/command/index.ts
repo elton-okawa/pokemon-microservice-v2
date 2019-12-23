@@ -6,4 +6,7 @@ export * from './trainer.command';
 export * from './challenge.command';
 export * from './pokemon.command';
 export * from './login.command';
+export * from './challenge.command';
 export * from './challenge-list.command';
+export * from './challenge-resolver.command';
+export * from './battle-list.command';

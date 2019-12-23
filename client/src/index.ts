@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import readline from 'readline';
 import Container from 'typedi';
 
-import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, PokemonCommand, LoginCommand, ChallengeListCommand } from './command';
+import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, PokemonCommand, LoginCommand, ChallengeListCommand, BattleListCommand } from './command';
 import { ChallengeResolveCommand } from './command/challenge-resolver.command';
 
 const rl = readline.createInterface({
@@ -31,6 +31,7 @@ const commands: Command[] = [
   Container.get(ChallengeCommand),
   Container.get(ChallengeListCommand),
   Container.get(ChallengeResolveCommand),
+  Container.get(BattleListCommand),
   new ExitCommand(),
 ];
 
