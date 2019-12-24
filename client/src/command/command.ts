@@ -1,20 +1,20 @@
 export abstract class Command {
-  command: string;
-  lengthOfArguments: number;
+  private command: string;
+  private lengthOfArguments: number;
 
   constructor(command: string, lengthOfArguments = 0) {
     this.command = command;
-    this.lengthOfArguments = lengthOfArguments + 1;
+    this.lengthOfArguments = lengthOfArguments;
   }
 
-  exec(args: any[]): any {
-    if (args[0] !== this.command || args.length !== this.lengthOfArguments) {
-      return;
-    }
-
+  exec(args: any[]): void {
     return this.do(args);
   }
 
-  abstract do(args: any[]): any;
+  getCommand() {
+    return this.command;
+  }
+
+  abstract do(args: any[]): void;
   abstract getUsage(): string;
 }

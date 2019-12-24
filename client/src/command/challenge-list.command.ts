@@ -42,8 +42,6 @@ export class ChallengeListCommand extends Command {
     } catch (err) {
       console.error(err);
     }
-
-    return true;
   }
 
   getUsage(): string {

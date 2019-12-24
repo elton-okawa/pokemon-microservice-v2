@@ -13,10 +13,7 @@ export class LoginCommand extends Command {
   }
 
   async do(args: any[]) {
-
-    Container.set(Constants[Constants.CURRENT_USER_ID], +args[1]);
-
-    return true;
+    Container.set(Constants[Constants.CURRENT_USER_ID], +args[0]);
   }
 
   getUsage(): string {

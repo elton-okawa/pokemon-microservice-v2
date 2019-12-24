@@ -24,7 +24,7 @@ export class TrainerBusDatasource {
       this.trainerStub.getTrainer({ id }, (err, trainer) => {
         if (err) {
           reject(err);
-        } else {
+        } else { 
           resolve(trainer);
         }
       });

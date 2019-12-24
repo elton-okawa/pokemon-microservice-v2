@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import readline from 'readline';
 import Container from 'typedi';
 
-import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, PokemonCommand, LoginCommand, ChallengeListCommand, BattleListCommand } from './command';
+import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, LoginCommand, ChallengeListCommand, BattleListCommand } from './command';
 import { ChallengeResolveCommand } from './command/challenge-resolver.command';
 
 const rl = readline.createInterface({
@@ -23,27 +23,35 @@ function printDivisor() {
 
 Container.set(Constants[Constants.CURRENT_USER_ID], 0);
 
-const commands: Command[] = [
+const commands: { [x: string]: Command } = [
   Container.get(LoginCommand),
   Container.get(LogoutCommand),
-  Container.get(PokemonCommand),
   Container.get(TrainerCommand),
   Container.get(ChallengeCommand),
   Container.get(ChallengeListCommand),
   Container.get(ChallengeResolveCommand),
   Container.get(BattleListCommand),
   new ExitCommand(),
-];
+].reduce((prev, curr) => {
+  prev[curr.getCommand()] = curr;
+
+  return prev;
+}, {});
 
 printDivisor();
-commands.forEach(command => console.info(command.getUsage()));
+Object.values(commands).forEach(command => console.info(command.getUsage()));
 printDivisor();
 
 async function main() {
   while(1) {
     const answer = await ask('\nDigite um comando: ');
-    const results = await Promise.all(commands.map(command => command.exec(answer.split(' '))));
-    console.info(results.reduce((prev, curr) => prev || curr) || 'Invalid command');
+    const args = answer.split(' ');
+    const command = commands[args[0]];
+    if (!command) {
+      console.error('Invalid command');
+    } else {
+      await command.exec(args.slice(1));
+    }
   }
 }
 

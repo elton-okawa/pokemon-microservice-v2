@@ -1,8 +1,5 @@
-import Container, { Service } from "typedi";
-import grpc from 'grpc';
-import path from 'path';
+import { Service } from "typedi";
 
-import { ProtoService } from "src/proto";
 import { TrainerBusDatasource } from "src/datasource";
 import { Command } from "./command";
 
@@ -19,7 +16,7 @@ export class TrainerCommand extends Command {
 
   async do(args: any[]) {
     try {
-      return await this.trainerBusDatasource.getTrainer(args[1]);
+      return await this.trainerBusDatasource.getTrainer(args[0]);
     } catch (error) {
       if (error.response) {
         return `[Status: ${error.response.status}] ${error.response.data}`;

@@ -19,17 +19,15 @@ export class ChallengeResolveCommand extends Command {
   async do(args: any[]) {
 
     try {
-      const accepted = args[2] === 'yes' ? true : false;
+      const accepted = args[1] === 'yes' ? true : false;
       const challengeResolveTopic = 'challenge-resolve';
 
-      const data = JSON.stringify({ id: args[1], accepted });
+      const data = JSON.stringify({ id: args[0], accepted });
       await this.pubsubService.publish(challengeResolveTopic, Buffer.from(data));
 
     } catch (err) {
       console.error(err);
     }
-
-    return true;
   }
 
   getUsage(): string {

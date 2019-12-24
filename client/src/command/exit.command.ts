@@ -13,6 +13,6 @@ export class ExitCommand extends Command {
   }  
   
   getUsage(): string {
-    return 'exit' 
+    return EXIT_COMMAND; 
   }
 }

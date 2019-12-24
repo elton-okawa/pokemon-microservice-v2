@@ -25,8 +25,6 @@ export class BattleListCommand extends Command {
     } catch (err) {
       console.error(err);
     }
-
-    return true;
   }
 
   private printFormattedBattlesMessage(battleList) {
@@ -34,8 +32,9 @@ export class BattleListCommand extends Command {
       const userPokemons = battle.user.pokemons.map(pokemon => pokemon.name).reduce((prev, curr) => `${prev} ${curr}`, '');
       const opponentPokemons = battle.opponent.pokemons.map(pokemon => pokemon.name).reduce((prev, curr) => `${prev} ${curr}`, '');
       console.info(`${battle.id}: ${battle.user.name} vs ${battle.opponent.name}`);
-      console.info(`\t${battle.user.name} pokemons: ${userPokemons}`);
-      console.info(`\t${battle.opponent.name} pokemons: ${opponentPokemons}`);
+      console.info(`\t${battle.user.name}: ${userPokemons}`);
+      console.info(`\t${battle.opponent.name}: ${opponentPokemons}`);
+      console.info(`\tChallengeId: ${battle.challengeId}`);
       console.info(`\tWinner: ${battle.winnerId === battle.user.id ? battle.user.name : battle.opponent.name}`);
     });
   }

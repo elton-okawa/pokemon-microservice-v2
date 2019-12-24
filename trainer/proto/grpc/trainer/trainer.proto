@@ -1,10 +1,5 @@
 syntax = "proto3";
 
-option java_multiple_files = true;
-option java_package = "io.grpc.examples.trainer";
-option java_outer_classname = "TrainerProto";
-option objc_class_prefix = "Tr";
-
 package trainer;
 
 service Trainer {
