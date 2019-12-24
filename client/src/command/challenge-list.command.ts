@@ -25,14 +25,20 @@ export class ChallengeListCommand extends Command {
         return;
       }
       const [userChallenges, opponentChallenges] = await Promise.all([
-        this.challengeBusDatasource.getUserChallenges(userId, ChallengeStatus.Pending),
-        this.challengeBusDatasource.getOpponentChallenges(userId, ChallengeStatus.Pending),
+        this.challengeBusDatasource.getUserChallenges(userId, [ChallengeStatus.Pending]),
+        this.challengeBusDatasource.getOpponentChallenges(userId, [ChallengeStatus.Pending]),
+      ]);
+
+      const [finishedChallenges] = await Promise.all([
+        this.challengeBusDatasource.getChallenges(userId, [ChallengeStatus.Accepted, ChallengeStatus.Refused]),
       ]);
 
       console.info('Your pending challenges:');
       this.printFormattedChallengeMessage(userChallenges.challenges);
-      console.info('Opponent pending challenges:');
+      console.info('\nOpponent pending challenges:');
       this.printFormattedChallengeMessage(opponentChallenges.challenges);
+      console.info('\nFinished challenges:');
+      this.printFormattedChallengeMessage(finishedChallenges.challenges);
     } catch (err) {
       console.error(err);
     }
@@ -48,7 +54,7 @@ export class ChallengeListCommand extends Command {
     challengeList.forEach(challenge => {
       const userPokemons = challenge.user.pokemons.map(pokemon => pokemon.name).reduce((prev, curr) => `${prev} ${curr}`, '');
       const opponentPokemons = challenge.opponent.pokemons.map(pokemon => pokemon.name).reduce((prev, curr) => `${prev} ${curr}`, '');
-      console.info(`${challenge.id}: ${challenge.user.name} vs ${challenge.opponent.name}`);
+      console.info(`${challenge.status.toUpperCase()} ${challenge.id}: ${challenge.user.name} vs ${challenge.opponent.name}`);
       console.info(`\tYour pokemons: ${userPokemons}`);
       console.info(`\tOpponent pokemons: ${opponentPokemons}`);
     });

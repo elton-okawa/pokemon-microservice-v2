@@ -15,7 +15,7 @@ message BattleListResponse {
 }
 
 message Battle {
-  int32 id = 1;
+  string id = 1;
   Trainer user = 2;
   Trainer opponent = 3;
   int32 winnerId = 4;

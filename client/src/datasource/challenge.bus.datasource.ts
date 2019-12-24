@@ -20,7 +20,7 @@ export class ChallengeBusDatasource {
     this.challengeStub = new challenge.ChallengeService('localhost:50052', grpc.credentials.createInsecure());
   }
 
-  getUserChallenges(id: number, status: ChallengeStatus): Promise<{ challenges: any[] }> {
+  getUserChallenges(id: number, status: ChallengeStatus[]): Promise<{ challenges: any[] }> {
     const promiseRes = new Promise<{ challenges: any[] }>((resolve, reject) => {
       this.challengeStub.getUserChallenges({ id, status }, (err, challengeList) => {
         if (err) {
@@ -34,7 +34,7 @@ export class ChallengeBusDatasource {
     return promiseRes;
   }
 
-  getOpponentChallenges(id: number, status: ChallengeStatus): Promise<{ challenges: any[] }> {
+  getOpponentChallenges(id: number, status: ChallengeStatus[]): Promise<{ challenges: any[] }> {
     const promiseRes = new Promise<{ challenges: any[] }>((resolve, reject) => {
       this.challengeStub.getOpponentChallenges({ id, status }, (err, challengeList) => {
         if (err) {
@@ -47,4 +47,18 @@ export class ChallengeBusDatasource {
 
     return promiseRes;
   }
+
+  getChallenges(id: number, status: ChallengeStatus[]): Promise<{ challenges: any[] }> {
+    const promiseRes = new Promise<{ challenges: any[] }>((resolve, reject) => {
+      this.challengeStub.getChallenges({ id, status }, (err, challengeList) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(challengeList);
+        }
+      });
+    });
+
+    return promiseRes;
+  } 
 }

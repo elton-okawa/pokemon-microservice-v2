@@ -22,15 +22,25 @@ function subscribe(subscriptionName: string, handler: (message) => void) {
 
 function getUserChallenges(call, callback) {
   const challengeList = db.filter(`/challenge`, (entry, index) => {
-    return entry.user.id === call.request.id && entry.status === call.request.status;
+    return entry.user.id === call.request.id && call.request.status.includes(entry.status);
   });
-  
+
   callback(null, { challenges: challengeList });
 }
 
 function getOpponentChallenges(call, callback) {
   const challengeList = db.filter(`/challenge`, (entry, index) => {
-    return entry.opponent.id === call.request.id && entry.status === call.request.status;
+    return entry.opponent.id === call.request.id && call.request.status.includes(entry.status);
+  });
+
+  callback(null, { challenges: challengeList });
+}
+
+function getChallenges(call, callback) {
+  const challengeList = db.filter(`/challenge`, (entry, index) => {
+    const userOrOpponentChallenge = 
+      entry.opponent.id === call.request.id || entry.user.id === call.request.id;
+    return userOrOpponentChallenge && call.request.status.includes(entry.status);
   });
 
   callback(null, { challenges: challengeList });
@@ -43,6 +53,7 @@ async function main() {
   server.addService(challengeProto.ChallengeService.service, {
     getUserChallenges,
     getOpponentChallenges,
+    getChallenges,
   });
 
   server.bind('0.0.0.0:50052', grpc.ServerCredentials.createInsecure());
@@ -73,8 +84,8 @@ async function subscribeToChallengeResolveTopic() {
     console.log(`\tAttributes: ${message.attributes}`);
     
     const messageData = JSON.parse(message.data);
-    
-    db.push(`/challenge/${messageData.id}`, { status: ChallengeStatus.Accepted }, false);
+    const challengeStatus = messageData.accepted ? ChallengeStatus.Accepted : ChallengeStatus.Refused;
+    db.push(`/challenge/${messageData.id}`, { status: challengeStatus }, false);
     const challengeData = db.getData(`/challenge/${messageData.id}`);
     const pubsub = Container.get(PubSubService);
     const messageId = await pubsub.publish(BATTLE_TOPIC, Buffer.from(JSON.stringify(challengeData)));
