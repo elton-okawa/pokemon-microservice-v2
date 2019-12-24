@@ -1,6 +1,7 @@
 import Container, { Service } from "typedi";
 
 import { ChallengeBusDatasource } from "src/datasource";
+import { ChallengeStatus } from "src/challenge-status";
 import { Command } from "./command";
 import { Constants } from "./contants";
 
@@ -24,8 +25,8 @@ export class ChallengeListCommand extends Command {
         return;
       }
       const [userChallenges, opponentChallenges] = await Promise.all([
-        this.challengeBusDatasource.getUserChallenges(userId),
-        this.challengeBusDatasource.getOpponentChallenges(userId),
+        this.challengeBusDatasource.getUserChallenges(userId, ChallengeStatus.Pending),
+        this.challengeBusDatasource.getOpponentChallenges(userId, ChallengeStatus.Pending),
       ]);
 
       console.info('Your pending challenges:');

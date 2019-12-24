@@ -3,6 +3,7 @@ import grpc from 'grpc';
 import path from 'path';
 
 import { ProtoService } from "src/proto";
+import { ChallengeStatus } from "src/challenge-status";
 
 const PROTO_PATH = path.join(process.cwd(), '../challenge/proto/grpc/challenge/challenge.proto');
 
@@ -19,9 +20,9 @@ export class ChallengeBusDatasource {
     this.challengeStub = new challenge.ChallengeService('localhost:50052', grpc.credentials.createInsecure());
   }
 
-  getUserChallenges(id: number): Promise<{ challenges: any[] }> {
+  getUserChallenges(id: number, status: ChallengeStatus): Promise<{ challenges: any[] }> {
     const promiseRes = new Promise<{ challenges: any[] }>((resolve, reject) => {
-      this.challengeStub.getUserChallenges({ id }, (err, challengeList) => {
+      this.challengeStub.getUserChallenges({ id, status }, (err, challengeList) => {
         if (err) {
           reject(err);
         } else {
@@ -33,9 +34,9 @@ export class ChallengeBusDatasource {
     return promiseRes;
   }
 
-  getOpponentChallenges(id: number): Promise<{ challenges: any[] }> {
+  getOpponentChallenges(id: number, status: ChallengeStatus): Promise<{ challenges: any[] }> {
     const promiseRes = new Promise<{ challenges: any[] }>((resolve, reject) => {
-      this.challengeStub.getOpponentChallenges({ id }, (err, challengeList) => {
+      this.challengeStub.getOpponentChallenges({ id, status }, (err, challengeList) => {
         if (err) {
           reject(err);
         } else {

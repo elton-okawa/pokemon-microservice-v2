@@ -8,7 +8,12 @@ service ChallengeService {
 }
 
 message ChallengeListRequest {
+  enum ChallengeStatus {
+    pending = 0;
+    accepted = 1;
+  }
   int32 id = 1;
+  ChallengeStatus status = 2;
 }
 
 message ChallengeListResponse {

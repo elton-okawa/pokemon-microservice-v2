@@ -22,7 +22,7 @@ function subscribe(subscriptionName: string, handler: (message) => void) {
 
 function getUserChallenges(call, callback) {
   const challengeList = db.filter(`/challenge`, (entry, index) => {
-    return entry.user.id === call.request.id && entry.status === ChallengeStatus.Pending;
+    return entry.user.id === call.request.id && entry.status === call.request.status;
   });
   
   callback(null, { challenges: challengeList });
@@ -30,7 +30,7 @@ function getUserChallenges(call, callback) {
 
 function getOpponentChallenges(call, callback) {
   const challengeList = db.filter(`/challenge`, (entry, index) => {
-    return entry.opponent.id === call.request.id && entry.status === ChallengeStatus.Pending;
+    return entry.opponent.id === call.request.id && entry.status === call.request.status;
   });
 
   callback(null, { challenges: challengeList });

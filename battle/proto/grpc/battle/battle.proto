@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package battle;
+
+service BattleService {
+  rpc getBattleList (BattleListRequest) returns (BattleListResponse) {}
+}
+
+message BattleListRequest {
+  int32 id = 1;
+}
+
+message BattleListResponse {
+  repeated Battle battles = 1;
+}
+
+message Battle {
+  int32 id = 1;
+  Trainer user = 2;
+  Trainer opponent = 3;
+  int32 winnerId = 4;
+  string challengeId = 5;
+}
+
+message Trainer {
+  int32 id = 1;
+  string name = 2;
+  repeated Pokemon pokemons = 3;
+}
+
+message Pokemon {
+  int32 id = 1;
+  string name = 2;
+}

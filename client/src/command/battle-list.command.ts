@@ -19,9 +19,9 @@ export class BattleListCommand extends Command {
 
     try {
       const userId = Container.get<number>(Constants[Constants.CURRENT_USER_ID]);
-      const userBattleList = await this.battleBusDatasource.getUserBattles(userId);
+      const userBattles = await this.battleBusDatasource.getUserBattles(userId);
 
-      this.printFormattedBattlesMessage(userBattleList);
+      this.printFormattedBattlesMessage(userBattles.battles);
     } catch (err) {
       console.error(err);
     }
@@ -36,7 +36,7 @@ export class BattleListCommand extends Command {
       console.info(`${battle.id}: ${battle.user.name} vs ${battle.opponent.name}`);
       console.info(`\t${battle.user.name} pokemons: ${userPokemons}`);
       console.info(`\t${battle.opponent.name} pokemons: ${opponentPokemons}`);
-      console.info(`\tWinner: ${battle.winner}`);
+      console.info(`\tWinner: ${battle.winnerId === battle.user.id ? battle.user.name : battle.opponent.name}`);
     });
   }
 

@@ -21,7 +21,7 @@ export class BattleBusDatasource {
 
   getUserBattles(id: number): Promise<{ battles: any[] }> {
     const promiseRes = new Promise<{ battles: any[] }>((resolve, reject) => {
-      this.battleStub.getUserBattles({ id }, (err, battleList) => {
+      this.battleStub.getBattleList({ id }, (err, battleList) => {
         if (err) {
           reject(err);
         } else {
