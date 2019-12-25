@@ -56,9 +56,11 @@ async function main() {
     getChallenges,
   });
 
-  server.bind('0.0.0.0:50052', grpc.ServerCredentials.createInsecure());
+  const port = process.env.PORT || 50052;
+  server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
   server.start();
-  
+  console.info(`ChallengeService listening to ${port}`);
+
   subscribeToChallengeTopic();
   await subscribeToChallengeResolveTopic();
 }

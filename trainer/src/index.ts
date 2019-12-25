@@ -34,8 +34,8 @@ async function main() {
 
   const port = process.env.PORT || 50051;
   server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
-  console.info(`TrainerService listening to ${port}`);
   server.start();
+  console.info(`TrainerService listening to ${port}`);
 }
 
 (async () => {
