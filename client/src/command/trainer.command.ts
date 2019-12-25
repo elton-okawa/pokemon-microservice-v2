@@ -16,7 +16,8 @@ export class TrainerCommand extends Command {
 
   async do(args: any[]) {
     try {
-      return await this.trainerBusDatasource.getTrainer(args[0]);
+      const trainer = await this.trainerBusDatasource.getTrainer(args[0]);
+      console.info(trainer);
     } catch (error) {
       if (error.response) {
         return `[Status: ${error.response.status}] ${error.response.data}`;
