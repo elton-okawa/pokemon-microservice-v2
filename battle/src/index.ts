@@ -55,8 +55,10 @@ async function main() {
     getBattleList,
   });
 
-  server.bind('0.0.0.0:50053', grpc.ServerCredentials.createInsecure());
+  const port = process.env.PORT || 50053;
+  server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
   server.start();
+  console.info(`BattleService is listening to ${port}`);
 
   subscribeToBattleTopic();
 }
