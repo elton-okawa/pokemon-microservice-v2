@@ -10,6 +10,7 @@ const db = new JsonDB(new Config("data", true, false, '/'));
 
 function getTrainer(call, callback) {
   const trainer = db.getData(`/${call.request.id}`);
+  console.log(trainer);
   callback(null, trainer);
 }
 
@@ -31,7 +32,9 @@ async function main() {
     getTrainer,
   });
 
-  server.bind('0.0.0.0:50051', grpc.ServerCredentials.createInsecure());
+  const port = process.env.PORT || 50051;
+  server.bind(`0.0.0.0:${port}`, grpc.ServerCredentials.createInsecure());
+  console.info(`TrainerService listening to ${port}`);
   server.start();
 }
 
