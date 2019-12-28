@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trainerservice
+spec:
+  selector:
+    matchLabels:
+      app: trainerservice
+  template:
+    metadata:
+      labels:
+        app: trainerservice
+    spec:
+      terminationGracePeriodSeconds: 5
+      containers:
+      - name: trainer
+        image: eltonokawa/trainer:05ccd9d
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 50051
+        env:
+        - name: PORT
+          value: "50051"
+        # readinessProbe:
+        #   exec:
+        #     command: ["/bin/grpc_health_probe", "-addr=:50051"]
+        # livenessProbe:
+        #   exec:
+        #     command: ["/bin/grpc_health_probe", "-addr=:50051"]
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: trainerservice
+spec:
+  type: NodePort
+  selector:
+    app: trainerservice
+  ports:
+  - name: grpc
+    port: 50051
+    targetPort: 50051

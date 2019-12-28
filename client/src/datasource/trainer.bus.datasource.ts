@@ -16,7 +16,7 @@ export class TrainerBusDatasource {
   ) {
     const protoDescriptor = this.protoService.getProtoDescriptor(PROTO_PATH);
     const trainer = protoDescriptor.trainer as any;
-    this.trainerStub = new trainer.Trainer('localhost:50051', grpc.credentials.createInsecure());
+    this.trainerStub = new trainer.Trainer('trainerservice:50051', grpc.credentials.createInsecure());
   }
 
   getTrainer(id: number) {

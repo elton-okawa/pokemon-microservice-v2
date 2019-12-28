@@ -1,0 +1,12 @@
+apiVersion: skaffold/v2alpha1
+kind: Config
+metadata:
+  name: pokemon-microservice-v-
+build:
+  artifacts:
+  - image: trainer
+    context: trainer
+deploy:
+  kubectl:
+    manifests:
+    - kubernetes-manifest/trainer.yaml
