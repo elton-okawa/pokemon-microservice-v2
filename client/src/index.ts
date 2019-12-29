@@ -1,9 +1,11 @@
 import 'reflect-metadata';
 import readline from 'readline';
 import axios from 'axios';
+import dotenv from 'dotenv';
 
-const INTERNAL_CLIENT_URL = process.env.INTERNAL_CLIENT_URL || 'localhost:3000';
-const app = axios.create({ baseURL: INTERNAL_CLIENT_URL });
+dotenv.config();
+const FRONTEND_URL = process.env.FRONTEND_URL || 'localhost:3000';
+const app = axios.create({ baseURL: FRONTEND_URL });
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -18,6 +20,7 @@ function ask(message: string): Promise<string> {
 }
 
 async function main() {
+  console.info(`Client requesting to ${FRONTEND_URL}`);
   while(1) {
     const answer = await ask('\nDigite um comando: ');
     const args = answer.split(' ');
@@ -27,7 +30,7 @@ async function main() {
     }
 
     try {
-      const response = await axios.post('/', data);
+      const response = await app.post('/', data);
       console.info(response.data);
     } catch (error) {
       if (error.response) {

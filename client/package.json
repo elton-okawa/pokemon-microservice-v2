@@ -9,6 +9,7 @@
   "dependencies": {
     "@google-cloud/pubsub": "1.2.0",
     "axios": "0.17.1",
+    "dotenv": "^8.2.0",
     "node": "13.1.0",
     "nodemon": "2.0.0",
     "reflect-metadata": "0.1.13",
