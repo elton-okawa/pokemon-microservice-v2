@@ -31,8 +31,10 @@ export class ChallengeCommand extends Command {
   
       const messageId = await this.pubsubService.publish(topicName, Buffer.from(data));
       console.log(`Message ${messageId} published.`);
+      return 'Challenge ok';
     } catch (err) {
       console.error(err);
+      return err.message;
     }
   }
 

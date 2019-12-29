@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import readline from 'readline';
-import Container from 'typedi';
+import axios from 'axios';
 
-import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, LoginCommand, ChallengeListCommand, BattleListCommand } from './command';
-import { ChallengeResolveCommand } from './command/challenge-resolver.command';
+const INTERNAL_CLIENT_URL = process.env.INTERNAL_CLIENT_URL || 'localhost:3000';
+const app = axios.create({ baseURL: INTERNAL_CLIENT_URL });
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -17,40 +17,24 @@ function ask(message: string): Promise<string> {
   }))
 }
 
-function printDivisor() {
-  console.info('\n################################\n');
-}
-
-Container.set(Constants[Constants.CURRENT_USER_ID], 0);
-
-const commands: { [x: string]: Command } = [
-  Container.get(LoginCommand),
-  Container.get(LogoutCommand),
-  Container.get(TrainerCommand),
-  Container.get(ChallengeCommand),
-  Container.get(ChallengeListCommand),
-  Container.get(ChallengeResolveCommand),
-  Container.get(BattleListCommand),
-  new ExitCommand(),
-].reduce((prev, curr) => {
-  prev[curr.getCommand()] = curr;
-
-  return prev;
-}, {});
-
-printDivisor();
-Object.values(commands).forEach(command => console.info(command.getUsage()));
-printDivisor();
-
 async function main() {
   while(1) {
     const answer = await ask('\nDigite um comando: ');
     const args = answer.split(' ');
-    const command = commands[args[0]];
-    if (!command) {
-      console.error('Invalid command');
-    } else {
-      await command.exec(args.slice(1));
+    const data = {
+      command: args[0],
+      args: args.slice(1),
+    }
+
+    try {
+      const response = await axios.post('/', data);
+      console.info(response.data);
+    } catch (error) {
+      if (error.response) {
+        console.error(error.response.data);
+      } else {
+        console.error(error);
+      }
     }
   }
 }

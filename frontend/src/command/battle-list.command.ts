@@ -22,8 +22,11 @@ export class BattleListCommand extends Command {
       const userBattles = await this.battleBusDatasource.getUserBattles(userId);
 
       this.printFormattedBattlesMessage(userBattles.battles);
+
+      return userBattles.battles;
     } catch (err) {
       console.error(err);
+      return err.message;
     }
   }
 

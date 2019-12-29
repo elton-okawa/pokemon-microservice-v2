@@ -18,12 +18,10 @@ export class TrainerCommand extends Command {
     try {
       const trainer = await this.trainerBusDatasource.getTrainer(args[0]);
       console.info(trainer);
+      return trainer;
     } catch (error) {
-      if (error.response) {
-        return `[Status: ${error.response.status}] ${error.response.data}`;
-      } else {
-        return error.message;
-      }
+      console.error(error);
+      return error.message;
     }
   }
 

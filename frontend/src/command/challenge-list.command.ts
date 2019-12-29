@@ -39,8 +39,11 @@ export class ChallengeListCommand extends Command {
       this.printFormattedChallengeMessage(opponentChallenges.challenges);
       console.info('\nFinished challenges:');
       this.printFormattedChallengeMessage(finishedChallenges.challenges);
+
+      return { userChallenges: userChallenges.challenges, opponentChallenges: opponentChallenges.challenges, finishedChallenges: finishedChallenges.challenges };
     } catch (err) {
       console.error(err);
+      return err.message;
     }
   }
 

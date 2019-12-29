@@ -24,9 +24,10 @@ export class ChallengeResolveCommand extends Command {
 
       const data = JSON.stringify({ id: args[0], accepted });
       await this.pubsubService.publish(challengeResolveTopic, Buffer.from(data));
-
+      return 'ChallengeResolve ok';
     } catch (err) {
       console.error(err);
+      return err.message;
     }
   }
 
