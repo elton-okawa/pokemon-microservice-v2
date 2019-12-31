@@ -27,7 +27,7 @@ export class ChallengeCommand extends Command {
         this.trainerBusDatasource.getTrainer(+args[0]),
       ]);
   
-      const data = JSON.stringify({ user: userData, opponent: opponentData });
+      const data = JSON.stringify({ user: userData, opponent: opponentData, date: new Date() });
   
       const messageId = await this.pubsubService.publish(topicName, Buffer.from(data));
       console.log(`Message ${messageId} published.`);
