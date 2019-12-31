@@ -22,7 +22,7 @@ export class ChallengeListCommand extends Command {
       const userId = Container.get<number>(Constants[Constants.CURRENT_USER_ID]);
       if (!userId) {
         console.info('Login first');
-        return;
+        return 'Login first';
       }
       const [userChallenges, opponentChallenges] = await Promise.all([
         this.challengeBusDatasource.getUserChallenges(userId, [ChallengeStatus.Pending]),

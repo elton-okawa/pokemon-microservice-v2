@@ -3,8 +3,18 @@ import readline from 'readline';
 import Container from 'typedi';
 import express from 'express';
 
-import { Command, ExitCommand, LogoutCommand, TrainerCommand, Constants, ChallengeCommand, LoginCommand, ChallengeListCommand, BattleListCommand } from './command';
-import { ChallengeResolveCommand } from './command/challenge-resolver.command';
+import { 
+  Command, 
+  ExitCommand, 
+  LogoutCommand, 
+  TrainerCommand, 
+  Constants, 
+  ChallengeCommand, 
+  ChallengeResolveCommand, 
+  LoginCommand, 
+  ChallengeListCommand, 
+  BattleListCommand,
+} from './command';
 
 const app = express();
 app.use(express.json());
@@ -30,6 +40,11 @@ const commands: { [x: string]: Command } = [
 }, {});
 
 async function main() {
+
+  app.get('/', (req, res) => {
+    res.send('Request ok');
+  });
+
   app.post('/', async (req, res) => {
     const command = commands[req.body.command];
     if (!command) {

@@ -4,7 +4,7 @@ import path from 'path';
 
 import { ProtoService } from "src/proto";
 
-const PROTO_PATH = path.join(process.cwd(), '../battle/proto/grpc/battle/battle.proto');
+const PROTO_PATH = path.join(process.cwd(), './proto/grpc/battle/battle.proto');
 
 @Service()
 export class BattleBusDatasource {
@@ -16,7 +16,8 @@ export class BattleBusDatasource {
   ) {
     const protoDescriptor = this.protoService.getProtoDescriptor(PROTO_PATH);
     const battle = protoDescriptor.battle as any;
-    this.battleStub = new battle.BattleService('localhost:50053', grpc.credentials.createInsecure());
+    const battleServiceAddress = process.env.BATTLE_SERVICE_ADDR || 'localhost:50053';
+    this.battleStub = new battle.BattleService(battleServiceAddress, grpc.credentials.createInsecure());
   }
 
   getUserBattles(id: number): Promise<{ battles: any[] }> {

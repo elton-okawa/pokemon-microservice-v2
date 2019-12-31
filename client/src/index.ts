@@ -4,7 +4,7 @@ import axios from 'axios';
 import dotenv from 'dotenv';
 
 dotenv.config();
-const FRONTEND_URL = process.env.FRONTEND_URL || 'localhost:3000';
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:80';
 const app = axios.create({ baseURL: FRONTEND_URL });
 
 const rl = readline.createInterface({

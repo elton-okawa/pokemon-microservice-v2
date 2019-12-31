@@ -8,6 +8,8 @@ build:
     context: trainer
   - image: challengeservice
     context: challenge
+  - image: battleservice
+    context: battle
   - image: frontend
     context: frontend
 

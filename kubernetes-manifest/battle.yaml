@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: battleservice
+spec:
+  selector:
+    matchLabels:
+      app: battleservice
+  template:
+    metadata:
+      labels:
+        app: battleservice
+    spec:
+      terminationGracePeriodSeconds: 5
+      volumes:
+      - name: google-cloud-key
+        secret:
+          secretName: pubsub-key
+      containers:
+      - name: battle
+        image: battleservice:1.0
+        ports:
+        - containerPort: 50052
+        env:
+        - name: PORT
+          value: "50053"
+        volumeMounts:
+        - name: google-cloud-key
+          mountPath: /var/secrets/google
+        env:
+        - name: GOOGLE_APPLICATION_CREDENTIALS
+          value: /var/secrets/google/key.json
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+          limits:
+            cpu: 200m
+            memory: 512Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: battleservice
+spec:
+  type: ClusterIP
+  selector:
+    app: battleservice
+  ports:
+  - name: grpc
+    port: 50053
+    targetPort: 50053

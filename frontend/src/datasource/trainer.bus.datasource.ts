@@ -4,7 +4,7 @@ import { Service } from "typedi";
 
 import { ProtoService } from "src/proto";
 
-const PROTO_PATH = path.join(process.cwd(), '../trainer/proto/grpc/trainer/trainer.proto');
+const PROTO_PATH = path.join(process.cwd(), './proto/grpc/trainer/trainer.proto');
 
 @Service()
 export class TrainerBusDatasource {
@@ -16,7 +16,8 @@ export class TrainerBusDatasource {
   ) {
     const protoDescriptor = this.protoService.getProtoDescriptor(PROTO_PATH);
     const trainer = protoDescriptor.trainer as any;
-    this.trainerStub = new trainer.Trainer('trainerservice:50051', grpc.credentials.createInsecure());
+    const trainerServiceAddress = process.env.TRAINER_SERVICE_ADDR || 'localhost:50051';
+    this.trainerStub = new trainer.Trainer(trainerServiceAddress, grpc.credentials.createInsecure());
   }
 
   getTrainer(id: number) {

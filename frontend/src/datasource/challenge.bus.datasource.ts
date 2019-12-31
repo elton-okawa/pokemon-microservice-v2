@@ -5,7 +5,7 @@ import path from 'path';
 import { ProtoService } from "src/proto";
 import { ChallengeStatus } from "src/challenge-status";
 
-const PROTO_PATH = path.join(process.cwd(), '../challenge/proto/grpc/challenge/challenge.proto');
+const PROTO_PATH = path.join(process.cwd(), './proto/grpc/challenge/challenge.proto');
 
 @Service()
 export class ChallengeBusDatasource {
@@ -17,7 +17,8 @@ export class ChallengeBusDatasource {
   ) {
     const protoDescriptor = this.protoService.getProtoDescriptor(PROTO_PATH);
     const challenge = protoDescriptor.challenge as any;
-    this.challengeStub = new challenge.ChallengeService('localhost:50052', grpc.credentials.createInsecure());
+    const challengeServiceAddress = process.env.CHALLENGE_SERVICE_ADDR || 'localhost:50052';
+    this.challengeStub = new challenge.ChallengeService(challengeServiceAddress, grpc.credentials.createInsecure());
   }
 
   getUserChallenges(id: number, status: ChallengeStatus[]): Promise<{ challenges: any[] }> {
