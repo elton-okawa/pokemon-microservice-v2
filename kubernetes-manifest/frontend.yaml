@@ -18,7 +18,8 @@ spec:
           secretName: pubsub-key
       containers:
       - name: frontend
-        image: frontend:1.0
+        image: gcr.io/pokemon-microservice-262723/
+        # image: frontend
         ports:
         - containerPort: 8080
         env:
@@ -37,11 +38,11 @@ spec:
           mountPath: /var/secrets/google
         resources:
           requests:
-            cpu: 100m
+            cpu: 75m
             memory: 128Mi
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 150m
+            memory: 256Mi
 ---
 apiVersion: v1
 kind: Service

@@ -18,12 +18,21 @@ spec:
           secretName: pubsub-key
       containers:
       - name: challenge
-        image: challengeservice:1.0
+        image: gcr.io/pokemon-microservice-262723/challengeservice
+        # image: challengeservice
         ports:
         - containerPort: 50052
         env:
         - name: PORT
           value: "50052"
+        readinessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:50052"]
+          initialDelaySeconds: 60
+        livenessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:50052"]
+          initialDelaySeconds: 60
         volumeMounts:
         - name: google-cloud-key
           mountPath: /var/secrets/google
@@ -32,11 +41,11 @@ spec:
           value: /var/secrets/google/key.json
         resources:
           requests:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 75m
+            memory: 128Mi
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 150m
+            memory: 256Mi
 ---
 apiVersion: v1
 kind: Service

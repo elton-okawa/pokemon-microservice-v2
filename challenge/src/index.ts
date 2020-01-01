@@ -8,7 +8,7 @@ import { PubSubService } from './pubsub';
 import { ProtoService } from './proto';
 import { ChallengeStatus } from './challenge-status';
 
-const PROTO_PATH = path.join(process.cwd(), 'proto', 'grpc', 'challenge', 'challenge.proto');
+const PROTO_ROOT_PATH = path.join(process.cwd(), 'proto', 'grpc');
 
 const db = new JsonDB(new Config("data", true, false, '/'));
 const SUBSCRIPTION_CHALLENGE_LISTEN = 'challenge-listen';
@@ -46,14 +46,24 @@ function getChallenges(call, callback) {
   callback(null, { challenges: challengeList });
 }
 
+function checkHandler(call, callback) {
+  callback(null, { status: 'SERVING' });
+}
+
 async function main() {
   const protoService = Container.get(ProtoService);
-  const challengeProto = protoService.getProtoDescriptor(PROTO_PATH).challenge as any;
+  const challengeProto = protoService.getProtoDescriptor(path.join(PROTO_ROOT_PATH, 'challenge', 'challenge.proto')).challenge as any;
+  const health = (protoService.getProtoDescriptor(path.join(PROTO_ROOT_PATH, 'health', 'v1', 'health.proto')).grpc as any).health.v1;
+
   const server = new grpc.Server();
   server.addService(challengeProto.ChallengeService.service, {
     getUserChallenges,
     getOpponentChallenges,
     getChallenges,
+  });
+
+  server.addService(health.Health.service, {
+    Check: checkHandler,
   });
 
   const port = process.env.PORT || 50052;

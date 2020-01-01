@@ -9,7 +9,7 @@ import { ProtoService } from './proto';
 import { PubSubService } from './pubsub';
 
 const SUBSCRIPTION_BATTLE_LISTEN = 'battle-listen';
-const PROTO_PATH = path.join(process.cwd(), 'proto', 'grpc', 'battle', 'battle.proto');
+const PROTO_ROOT_PATH = path.join(process.cwd(), 'proto', 'grpc');
 
 const db = new JsonDB(new Config("data", true, false, '/'));
 
@@ -44,15 +44,22 @@ function subscribeToBattleTopic() {
   pubSubService.subscribe(SUBSCRIPTION_BATTLE_LISTEN, battleHandler);
 }
 
+function checkHandler(call, callback) {
+  callback(null, { status: 'SERVING' });
+}
 
 async function main() {
   const protoService = Container.get(ProtoService);
-  const protoDescriptor = protoService.getProtoDescriptor(PROTO_PATH);
-  const battle = protoDescriptor.battle as any;
+  const battle = protoService.getProtoDescriptor(path.join(PROTO_ROOT_PATH, 'battle', 'battle.proto')).battle as any;
+  const health = (protoService.getProtoDescriptor(path.join(PROTO_ROOT_PATH, 'health', 'v1', 'health.proto')).grpc as any).health.v1;
 
   const server = new grpc.Server();
   server.addService(battle.BattleService.service, {
     getBattleList,
+  });
+
+  server.addService(health.Health.service, {
+    Check: checkHandler,
   });
 
   const port = process.env.PORT || 50053;

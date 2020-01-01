@@ -19,6 +19,8 @@ export class ChallengeBusDatasource {
     const challenge = protoDescriptor.challenge as any;
     const challengeServiceAddress = process.env.CHALLENGE_SERVICE_ADDR || 'localhost:50052';
     this.challengeStub = new challenge.ChallengeService(challengeServiceAddress, grpc.credentials.createInsecure());
+
+    console.info(`Requesting to ${challengeServiceAddress}`);
   }
 
   getUserChallenges(id: number, status: ChallengeStatus[]): Promise<{ challenges: any[] }> {

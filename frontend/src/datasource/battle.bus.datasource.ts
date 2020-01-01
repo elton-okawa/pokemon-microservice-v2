@@ -18,6 +18,8 @@ export class BattleBusDatasource {
     const battle = protoDescriptor.battle as any;
     const battleServiceAddress = process.env.BATTLE_SERVICE_ADDR || 'localhost:50053';
     this.battleStub = new battle.BattleService(battleServiceAddress, grpc.credentials.createInsecure());
+
+    console.info(`Requesting to ${battleServiceAddress}`);
   }
 
   getUserBattles(id: number): Promise<{ battles: any[] }> {

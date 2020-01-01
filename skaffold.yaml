@@ -1,7 +1,5 @@
-apiVersion: skaffold/v2alpha1
+apiVersion: skaffold/v1beta2
 kind: Config
-metadata:
-  name: pokemon-microservice-v2
 build:
   artifacts:
   - image: trainerservice
@@ -17,3 +15,12 @@ deploy:
   kubectl:
     manifests:
     - kubernetes-manifest/*.yaml
+
+profiles:
+  - name: gcb
+    build:
+      googleCloudBuild:
+        projectId: pokemon-microservice-262723
+  - name: local
+    build: 
+      local:

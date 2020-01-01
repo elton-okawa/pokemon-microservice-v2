@@ -16,19 +16,28 @@ spec:
       terminationGracePeriodSeconds: 5
       containers:
       - name: trainer
-        image: trainerservice:1.0
+        image: gcr.io/pokemon-microservice-262723/trainerservice
+        # image: trainerservice
         ports:
         - containerPort: 50051
         env:
         - name: PORT
           value: "50051"
+        readinessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:50051"]
+          initialDelaySeconds: 60
+        livenessProbe:
+          exec:
+            command: ["/bin/grpc_health_probe", "-addr=:50051"]
+          initialDelaySeconds: 60
         resources:
           requests:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 75m
+            memory: 128Mi
           limits:
-            cpu: 200m
-            memory: 512Mi
+            cpu: 150m
+            memory: 256Mi
 ---
 apiVersion: v1
 kind: Service

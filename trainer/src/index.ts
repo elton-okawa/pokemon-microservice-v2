@@ -1,35 +1,39 @@
 import path from 'path';
 import grpc from 'grpc';
+import { Container } from 'typedi';
 import * as protoLoader from '@grpc/proto-loader';
 import { JsonDB } from 'node-json-db';
-import { Config } from 'node-json-db/dist/lib/JsonDBConfig'
+import { Config } from 'node-json-db/dist/lib/JsonDBConfig';
 
-const PROTO_PATH = path.join(process.cwd(), 'proto', 'grpc', 'trainer', 'trainer.proto');
+import { ProtoService } from './proto';
+
+const PROTO_ROOT_PATH = path.join(process.cwd(), 'proto', 'grpc');
 
 const db = new JsonDB(new Config("data", true, false, '/'));
 
 function getTrainer(call, callback) {
   const trainer = db.getData(`/${call.request.id}`);
-  console.log(trainer);
+  console.info(trainer);
   callback(null, trainer);
 }
 
+function checkHandler(call, callback) {
+  callback(null, { status: 'SERVING' });
+}
+
 async function main() {
-  const packageDefinition = protoLoader.loadSync(
-    PROTO_PATH,
-    {
-      keepCase: true,
-      longs: String,
-      enums: String,
-      defaults: true,
-      oneofs: true
-    });
-  const protoDescriptor = grpc.loadPackageDefinition(packageDefinition);
-  const trainer = protoDescriptor.trainer as any;
+  const protoService = Container.get(ProtoService);
+  
+  const trainer = protoService.getProtoDescriptor(path.join(PROTO_ROOT_PATH, 'trainer', 'trainer.proto')).trainer as any;
+  const health = (protoService.getProtoDescriptor(path.join(PROTO_ROOT_PATH, 'health', 'v1', 'health.proto')).grpc as any).health.v1;
 
   const server = new grpc.Server();
   server.addService(trainer.Trainer.service, {
     getTrainer,
+  });
+
+  server.addService(health.Health.service, {
+    Check: checkHandler,
   });
 
   const port = process.env.PORT || 50051;
