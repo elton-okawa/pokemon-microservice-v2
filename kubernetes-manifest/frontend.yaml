@@ -18,7 +18,7 @@ spec:
           secretName: pubsub-key
       containers:
       - name: frontend
-        image: gcr.io/pokemon-microservice-262723/
+        image: gcr.io/pokemon-microservice-262723/frontend
         # image: frontend
         ports:
         - containerPort: 8080
