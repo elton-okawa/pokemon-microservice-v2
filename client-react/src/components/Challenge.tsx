@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import { Container } from 'typedi';
 
 import { ChallengeDatasource } from 'src/datasource/challenge.datasource';
 
-const Challenge: React.FC = () => {
+const Challenge = () => {
   const [challenges, setChallenges] = useState({});
   const challengeDatasource = Container.get(ChallengeDatasource);
 

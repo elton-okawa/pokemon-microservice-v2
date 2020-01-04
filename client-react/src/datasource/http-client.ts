@@ -12,8 +12,8 @@ export class HttpClient {
     this.httpClient = Axios.create({ 
       baseURL: Container.get(POKEMON_SERVICE_BASE_URL),
       headers: {
-        "Access-Control-Allow-Origin": Container.get(POKEMON_SERVICE_BASE_URL),
-      }
+        "Access-Control-Allow-Origin": "*",
+      },
     });
     console.info(`Requesting to ${Container.get(POKEMON_SERVICE_BASE_URL)}`);
   }

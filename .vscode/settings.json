@@ -1,0 +1,3 @@
+{
+  "typescript.tsdk": "./client-react/node_modules/typescript/lib"
+}

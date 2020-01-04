@@ -1,17 +1,27 @@
-# steps:
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/trainerservice', './trainer' ]
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/challengeservice', './challenge' ]
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/battleservice', './battle' ]
-# - name: 'gcr.io/cloud-builders/docker'
-#   args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/frontend', './frontend' ]
-# images:
-# - 'gcr.io/$PROJECT_ID/trainerservice'
-# - 'gcr.io/$PROJECT_ID/challengeservice'
-# - 'gcr.io/$PROJECT_ID/battleservice'
-# - 'gcr.io/$PROJECT_ID/frontend'
+  steps:
+  - name: 'gcr.io/cloud-builders/docker'
+    args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/trainerservice', './trainer' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/challengeservice', './challenge' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/battleservice', './battle' ]
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/frontend', './frontend' ]
+
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/trainerservice"]
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/challengeservice"]
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/battleservice"]
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/frontend"]
+  
+images:
+- 'gcr.io/$PROJECT_ID/trainerservice'
+- 'gcr.io/$PROJECT_ID/challengeservice'
+- 'gcr.io/$PROJECT_ID/battleservice'
+- 'gcr.io/$PROJECT_ID/frontend'
 
 
 # USAGE:

@@ -1,0 +1,15 @@
+steps:
+  # build the container image
+- name: 'gcr.io/cloud-builders/docker'
+  args: [ 'build', '-t', 'gcr.io/$PROJECT_ID/frontend', './frontend' ]
+  # push container image
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/frontend:latest"]
+  # deploy container image to GKE
+- name: "gcr.io/cloud-builders/gke-deploy:stable"
+  args:
+  - run
+  - --filename=./kubernetes-manifest/frontend.yaml
+  - --image=gcr.io/$PROJECT_ID/frontend:latest
+  - --location=$_ZONE
+  - --cluster=$_CLUSTER

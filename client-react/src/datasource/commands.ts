@@ -4,4 +4,6 @@ export enum Commands {
   ChallengeList = 'challenge-list',
   BattleList = 'battle-list',
   Trainer = 'trainer',
+  Login = 'login',
+  Logout = 'logout',
 }

@@ -12,7 +12,7 @@ export class ChallengeDatasource {
 
   constructor (
   ) {
-    this.httpClient= Container.get(HttpClient);
+    this.httpClient = Container.get(HttpClient);
   }
 
   async getChallenges(setChallenges: Dispatch<SetStateAction<AllChallengesModel>>): Promise<void> {
