@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import './App.css';
-import Challenge from './Challenge';
+import ChallengeList from './ChallengeList';
 import Login from './Login';
 
 const App: React.FC = () => {
@@ -18,7 +18,7 @@ const App: React.FC = () => {
 function renderComponents(userId?: number, setUserId?: React.Dispatch<number>) {
   if (userId) {
     return (
-      <Challenge />
+      <ChallengeList />
     );
   } else {
     return (
