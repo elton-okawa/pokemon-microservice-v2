@@ -15,6 +15,7 @@ import {
   LoginCommand, 
   ChallengeListCommand, 
   BattleListCommand,
+  TrainerListCommand,
 } from './command';
 
 const app = express();
@@ -25,7 +26,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 8080;
 
 
 Container.set(Constants[Constants.CURRENT_USER_ID], 0);
@@ -34,6 +35,7 @@ const commands: { [x: string]: Command } = [
   Container.get(LoginCommand),
   Container.get(LogoutCommand),
   Container.get(TrainerCommand),
+  Container.get(TrainerListCommand),
   Container.get(ChallengeCommand),
   Container.get(ChallengeListCommand),
   Container.get(ChallengeResolveCommand),

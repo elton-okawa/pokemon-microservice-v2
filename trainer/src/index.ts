@@ -12,9 +12,15 @@ const PROTO_ROOT_PATH = path.join(process.cwd(), 'proto', 'grpc');
 const db = new JsonDB(new Config("data", true, false, '/'));
 
 function getTrainer(call, callback) {
-  const trainer = db.getData(`/${call.request.id}`);
+  const trainer = db.getData(`/trainer/${call.request.id}`);
   console.info(trainer);
   callback(null, trainer);
+}
+
+function getTrainerList(call, callback) {
+  const trainerList = db.filter('/trainer', entry => entry);
+  console.info(trainerList);
+  callback(null, { trainers: trainerList });
 }
 
 function checkHandler(call, callback) {
@@ -30,6 +36,7 @@ async function main() {
   const server = new grpc.Server();
   server.addService(trainer.Trainer.service, {
     getTrainer,
+    getTrainerList,
   });
 
   server.addService(health.Health.service, {

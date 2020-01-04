@@ -4,7 +4,10 @@ package trainer;
 
 service Trainer {
   rpc getTrainer (TrainerRequest) returns (TrainerResponse) {}
+  rpc getTrainerList (Empty) returns (TrainerListResponse) {}
 }
+
+message Empty {}
 
 message TrainerRequest {
   int32 id = 1;
@@ -13,10 +16,20 @@ message TrainerRequest {
 message TrainerResponse {
   int32 id = 1;
   string name = 2;
-  repeated Pokemon pokemons = 3;
+  repeated PokemonModel pokemons = 3;
 }
 
-message Pokemon {
+message TrainerListResponse {
+  repeated TrainerModel trainers = 1;
+}
+
+message TrainerModel {
+  int32 id = 1;
+  string name = 2;
+  repeated PokemonModel pokemons = 3;
+}
+
+message PokemonModel {
   int32 id = 1;
   string name = 2;
 }

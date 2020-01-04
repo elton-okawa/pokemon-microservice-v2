@@ -35,4 +35,18 @@ export class TrainerBusDatasource {
 
     return promiseRes;
   }
+
+  getTrainerList() {
+    const promiseRes = new Promise((resolve, reject) => {
+      this.trainerStub.getTrainerList({}, (err, trainerList) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(trainerList);
+        }
+      });
+    });
+
+    return promiseRes;
+  }
 }

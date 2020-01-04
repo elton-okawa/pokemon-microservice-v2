@@ -1,6 +1,7 @@
 Kubernets
 Deploy on Google Cloud
 Fix packages version
+Remove nodemon for prod
 Upload only own service archives
 Use a real database
 

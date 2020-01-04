@@ -1,21 +1,23 @@
 {
-  "1": {
-    "id": "1",
-    "name": "Ash Ketchum",
-    "pokemons": [{
+  "trainer": {
+    "1": {
       "id": "1",
-      "name": "Bulbasaur"
-    }, {
-      "id": "4",
-      "name": "Charmander"
-    }]
-  },
-  "2": {
-    "id": "2",
-    "name": "Gary Oak",
-    "pokemons": [{
-      "id": "7",
-      "name": "Squirtle"
-    }]
+      "name": "Ash Ketchum",
+      "pokemons": [{
+        "id": "1",
+        "name": "Bulbasaur"
+      }, {
+        "id": "4",
+        "name": "Charmander"
+      }]
+    },
+    "2": {
+      "id": "2",
+      "name": "Gary Oak",
+      "pokemons": [{
+        "id": "7",
+        "name": "Squirtle"
+      }]
+    }
   }
 }

@@ -9,3 +9,4 @@ export * from './challenge.command';
 export * from './challenge-list.command';
 export * from './challenge-resolver.command';
 export * from './battle-list.command';
+export * from './trainer-list.command';
