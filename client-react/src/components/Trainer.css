@@ -1,0 +1,22 @@
+#trainer {
+  width: 60%;
+  margin: 0 auto;
+}
+
+#challenge-button {
+  display: block;
+  margin: auto 0;
+  background-color: #e32249;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+#challenge-button:hover {
+  background-color: white;
+  color: #e32249;
+  border-radius: 8px;
+}

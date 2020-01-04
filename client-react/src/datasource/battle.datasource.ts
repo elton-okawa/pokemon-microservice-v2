@@ -1,12 +1,12 @@
 import Container, { Service } from "typedi";
 import { SetStateAction, Dispatch } from "react";
 
-import { TrainerModel } from "src/model";
+import { BattleModel } from "src/model";
 import { HttpClient } from "./http-client";
 import { Commands } from "./commands";
 
 @Service()
-export class TrainerDatasource {
+export class BattleDatasource {
 
   httpClient: HttpClient;
 
@@ -15,10 +15,10 @@ export class TrainerDatasource {
     this.httpClient = Container.get(HttpClient);
   }
 
-  async getTrainers(): Promise<TrainerModel[]> {
+  async getBattles(): Promise<BattleModel[]> {
     try {
-      const response = await this.httpClient.post('/', { command: Commands.TrainerList });
-      return response.data.trainers;
+      const response = await this.httpClient.post('/', { command: Commands.BattleList });
+      return response.data;
     } catch (error) {
       console.log(error);
       throw error;

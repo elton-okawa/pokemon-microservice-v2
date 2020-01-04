@@ -1,0 +1,40 @@
+.display-inline {
+  display: inline-block;
+}
+
+.flex-list {
+  display: flex;
+}
+
+.inline-list-items li {
+  display: inline-block;
+}
+
+.small-image {
+  width: 80px;
+  height: 80px;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.empty-horizontal-space {
+  margin: 0 auto;
+}
+
+.pokemon-square {
+  width: 128px;
+  height: 128px;
+  text-align: center;
+  margin: 5px;
+  background-color: #F0F0F0;
+}
+
+ul {
+  padding: 0;
+}
