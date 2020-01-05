@@ -23,4 +23,14 @@ export class ChallengeDatasource {
       console.log(error);
     }
   }
+
+  async createChallenge(opponentId: number) {
+    try {
+      const response = await this.httpClient.post('/', { command: Commands.Challenge, args: [opponentId] });
+      return response.data;
+    } catch (error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

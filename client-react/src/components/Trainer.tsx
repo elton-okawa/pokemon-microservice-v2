@@ -1,8 +1,10 @@
-import React, { useState, useEffect, ReactNode } from "react";
+import React from "react";
 import { Container } from 'typedi';
+import { useAlert } from 'react-alert'
 
 import { TrainerModel } from "src/model";
 import { PokemonDatasource } from "src/datasource/pokemon.datasource";
+import { ChallengeDatasource } from "src/datasource/challenge.datasource";
 import './common.css';
 import './Trainer.css';
 
@@ -13,6 +15,16 @@ interface TrainerProps {
 const Trainer = (props: TrainerProps) => {
   const { trainer } = props;
   const pokemonDatasource = Container.get(PokemonDatasource);
+  const alert = useAlert();
+
+  const handleClick = (event) => {
+    const challengeDatasource = Container.get(ChallengeDatasource);
+    challengeDatasource.createChallenge(trainer.id).then(res => {
+      alert.show(`Challenge created successfully`);
+    }).catch(err => {
+      alert.show(err.message);
+    });
+  }
 
   return (
     <div id="trainer">
@@ -27,7 +39,7 @@ const Trainer = (props: TrainerProps) => {
           );
         })}
         <div className="empty-horizontal-space"/>
-        <button id="challenge-button">Challenge!</button>
+        <button id="challenge-button" onClick={handleClick}>Challenge!</button>
       </ul>
     </div>
   );
