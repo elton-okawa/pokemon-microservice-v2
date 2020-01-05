@@ -91,3 +91,22 @@ ul {
 .refused {
   background: radial-gradient(#FF0C08, #FFFFFF00);
 }
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 50% auto;
+  grid-template-rows: auto;
+}
+
+.item-1 {
+  grid-column-start: 1;
+}
+
+.item-2 {
+  grid-column-start: 2;
+}
+
+.item-row {
+  grid-column-start: 1;
+  grid-column-end: 2;
+}

@@ -1,10 +1,11 @@
 import React, { useState, useEffect, ReactNode } from "react";
 import { Container } from 'typedi';
-import { Container as ReactContainer, Row, Col } from 'react-bootstrap';
 
 import { BattleDatasource } from 'src/datasource/battle.datasource';
 import { BattleModel } from "src/model";
 import Trainer from "./Trainer";
+import './BattleList.css';
+import HorizontalDivisor from "./HorizontalDivisor";
 
 const BattleList = () => {
   const [battles, setBattles] = useState([] as BattleModel[]);
@@ -17,23 +18,25 @@ const BattleList = () => {
   }, [battleDatasource]);
 
   return (
-    <ReactContainer>
-      <Row className="justify-content-lg-center">
-        <Col xs="auto">
-          {battles.map((battle: BattleModel) => {
-            return (
-              <div>
-                <p>User</p>
-                <Trainer trainer={battle.user} />
-                <p>Opponent</p>
-                <Trainer trainer={battle.user} />
-                <p>Winner { battle.winnerId === battle.user.id ? battle.user.name : battle.opponent.name}</p>
-              </div>
-            );
-          })}
-        </Col>
-      </Row>
-    </ReactContainer>
+    <div className="container grid-container">
+      {battles.map((battle: BattleModel) => {
+        return (
+          <div>
+            <div className={`item-1 ${battle.winnerId === battle.user.id ? 'winner' : 'loser'}`}>
+              <p className="center-text">User</p>
+              <Trainer trainer={battle.user} />
+              <p className="center-text"><strong>{battle.winnerId === battle.user.id ? 'Winner' : 'Loser'}</strong></p>
+            </div>
+            <div className={`item-2 ${battle.winnerId === battle.opponent.id ? 'winner' : 'loser'}`}>
+              <p className="center-text">Opponent</p>
+              <Trainer trainer={battle.user} />
+              <p className="center-text"><strong>{battle.winnerId === battle.opponent.id ? 'Winner' : 'Loser'}</strong></p>
+            </div>
+            <div className="item-row"><HorizontalDivisor /></div>
+          </div>
+        );
+      })}
+    </div >
   );
 }
 

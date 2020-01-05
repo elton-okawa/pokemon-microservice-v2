@@ -1,0 +1,11 @@
+.winner {
+  margin: 10px 0 20px 0;
+  padding: 20px;
+  border: 1px solid grey;
+  background: radial-gradient(#9FFF8555, #FFFFFF00);
+}
+
+.loser {
+  border: 1px solid grey;
+  background: radial-gradient(#FF0C0855, #FFFFFF00);
+}
