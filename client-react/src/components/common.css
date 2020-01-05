@@ -1,3 +1,12 @@
+.container {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.block {
+  display: block;
+}
+
 .display-inline {
   display: inline-block;
 }
@@ -6,8 +15,29 @@
   display: flex;
 }
 
+.inline-flex {
+  display: inline-flex;
+}
+
+.inline-block {
+  display: inline-block;
+}
+
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
 .inline-list-items li {
   display: inline-block;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
 }
 
 .small-image {
@@ -37,4 +67,27 @@
 
 ul {
   padding: 0;
+}
+
+#versus {
+  width: 80px;
+  height: 80px;
+  padding: auto;
+}
+
+#versus-container {
+  display: flex;
+  align-items: center;
+}
+
+.pending {
+  background: radial-gradient(#FFFC00, #FFFFFF00);
+}
+
+.accepted {
+  background-color: greenyellow;
+}
+
+.refused {
+  background-color: red
 }

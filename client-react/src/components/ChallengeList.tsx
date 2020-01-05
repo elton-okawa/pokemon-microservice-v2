@@ -14,18 +14,18 @@ const ChallengeList = () => {
   }, [challengeDatasource]);
 
   return (
-    <div>
+    <div className="container">
       <h3>Your challenges:</h3>
         {challenges.userChallenges?.map(challenge => {
-          return <Challenge challenge={challenge} />
+          return <Challenge key={challenge.id} challenge={challenge} />
         })}
       <h3>Opponent challenges:</h3>
         {challenges.opponentChallenges?.map(challenge => {
-          return <Challenge challenge={challenge} />
+          return <Challenge key={challenge.id} challenge={challenge} />
         })}
       <h3>Finished challenges:</h3>
         {challenges.finishedChallenges?.map(challenge => {
-          return <Challenge challenge={challenge} />
+          return <Challenge key={challenge.id} challenge={challenge} />
         })}
     </div>
   );

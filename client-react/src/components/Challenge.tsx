@@ -1,9 +1,7 @@
-import React, { useState, useEffect, ReactNode } from "react";
-import { Container } from 'typedi';
+import React from "react";
 
-import { ChallengeDatasource } from 'src/datasource/challenge.datasource';
-import { AllChallengesModel, ChallengeModel, TrainerModel } from "src/model";
-import { userInfo } from "os";
+import { ChallengeModel } from "src/model";
+import Trainer from "./Trainer";
 
 interface ChallengeProps {
   challenge: ChallengeModel,
@@ -13,26 +11,17 @@ const Challenge = (props: ChallengeProps) => {
   const { user, opponent, status } = props.challenge;
 
   return (
-    <div>
-      {renderTrainer(user)}
-      {renderTrainer(opponent)}
-      <p>{status}</p>
-    </div>
-  );
-}
-
-function renderTrainer(trainer: TrainerModel) {
-  return (
-    <div>
-      <p>{trainer.name}</p>
-      <ul>
-        {trainer.pokemons.map(pokemon => {
-          return (
-            <li>{pokemon.name}</li>
-          );
-        })}
-      </ul>
-    </div>
+    <ul className={`inline-list-items flex ${status}`}>
+      <li key="challenge-1">
+        <Trainer trainer={user} />
+      </li>
+      <div id="versus-container">
+        <img id="versus" src="https://www.pikpng.com/pngl/b/28-280006_versus-logo-png-vs-bodyboards-transparent-png.png"/>
+      </div>
+      <li key="challenge-2">
+        <Trainer trainer={opponent} />
+      </li>
+    </ul>
   );
 }
 

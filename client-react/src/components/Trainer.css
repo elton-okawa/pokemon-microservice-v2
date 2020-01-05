@@ -1,6 +1,5 @@
 #trainer {
-  width: 60%;
-  margin: 0 auto;
+  display: inline-block;
 }
 
 #challenge-button {

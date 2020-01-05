@@ -15,21 +15,11 @@ interface TrainerProps {
 const Trainer = (props: TrainerProps) => {
   const { trainer } = props;
   const pokemonDatasource = Container.get(PokemonDatasource);
-  const alert = useAlert();
-
-  const handleClick = (event) => {
-    const challengeDatasource = Container.get(ChallengeDatasource);
-    challengeDatasource.createChallenge(trainer.id).then(res => {
-      alert.show(`Challenge created successfully`);
-    }).catch(err => {
-      alert.show(err.message);
-    });
-  }
 
   return (
     <div id="trainer">
       <p>Name: <strong>{trainer.name}</strong></p>
-      <ul className="flex-list inline-list-items">
+      <ul className="inline-list-items">
         {trainer.pokemons.map(pokemon => {
           return (
             <li key={pokemon.id} className="pokemon-square">
@@ -38,8 +28,6 @@ const Trainer = (props: TrainerProps) => {
             </li>
           );
         })}
-        <div className="empty-horizontal-space"/>
-        <button id="challenge-button" onClick={handleClick}>Challenge!</button>
       </ul>
     </div>
   );
