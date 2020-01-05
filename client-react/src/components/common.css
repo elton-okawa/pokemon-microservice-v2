@@ -85,9 +85,9 @@ ul {
 }
 
 .accepted {
-  background-color: greenyellow;
+  background: radial-gradient(#9FFF85, #FFFFFF00);
 }
 
 .refused {
-  background-color: red
+  background: radial-gradient(#FF0C08, #FFFFFF00);
 }

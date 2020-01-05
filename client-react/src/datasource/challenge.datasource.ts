@@ -33,4 +33,14 @@ export class ChallengeDatasource {
       throw error;
     }
   }
+
+  async resolveChallenge(challengeId: string, answer: string) {
+    try {
+      const response = await this.httpClient.post('/', { command: Commands.ChallengeResolve, args: [challengeId, answer] });
+      return response.data;
+    } catch(error) {
+      console.log(error);
+      throw error;
+    }
+  }
 }

@@ -1,0 +1,41 @@
+#challenge-buttons-container {
+  margin: 20px 0 20px 0;
+  justify-content: center;
+  display: flex;
+}
+
+#challenge-accept {
+  margin: 0 20px 0 0;
+  background-color: #3DEB00;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+#challenge-accept:hover {
+  background-color: white;
+  color: #3DEB00;
+  border-radius: 8px;
+}
+
+#challenge-refuse {
+  margin: auto 0;
+  background-color: red;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 8px;
+}
+
+#challenge-refuse:hover {
+  background-color: white;
+  color: red;
+  border-radius: 8px;
+}
+
+
